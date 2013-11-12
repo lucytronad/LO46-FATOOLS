@@ -61,7 +61,7 @@
         android:orderInCategory="22"
         android:showAsAction="always"
         android:title="@android:string/unknownName">
-    </item>
+    </item> -->
     <item
         android:id="@+id/menu_decoration_text"
         android:checkable="false"
@@ -72,7 +72,7 @@
         android:showAsAction="always"
         android:title="@android:string/unknownName">
     </item>
-    <item
+    <!-- <item
         android:id="@+id/menu_decoration_image"
         android:checkable="false"
         android:enabled="true"

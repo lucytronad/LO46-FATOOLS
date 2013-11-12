@@ -96,17 +96,6 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			FAStateFigure figure = stateFigure.get();
 			String actionCode = null;
 			int actionId = 2;
-			if (figure.isInEnterActionBox(hitPosition)) {
-				actionCode = figure.getModelObject().getEnterAction();
-				actionId = 1;
-			}
-			else if (figure.isInExitActionBox(hitPosition)) {
-				actionCode = figure.getModelObject().getExitAction();
-				actionId = 3;
-			}
-			else if (figure.isInInsideActionBox(hitPosition)) {
-				actionCode = figure.getModelObject().getAction();
-			}
 			if (actionCode==null || actionCode.isEmpty()) {
 				actionCode = DEFAULT_ACTION_NAME;
 			}
@@ -271,7 +260,7 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 				FigureActionModeManager modeManager = view.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
-			}
+			}*/
 			case R.id.menu_decoration_text:
 			{
 				TextDecorationCreationMode mode = new TextDecorationCreationMode();
@@ -280,7 +269,7 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 				modeManager.startMode(mode);
 				return true;
 			}
-			case R.id.menu_decoration_image:
+			/*case R.id.menu_decoration_image:
 			{
 				BitmapDecorationCreationMode mode = new BitmapDecorationCreationMode();
 				FigureView<?> view = getFigureView();

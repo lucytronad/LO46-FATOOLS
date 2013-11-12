@@ -26,9 +26,6 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 	private static final long serialVersionUID = 8039121028238470714L;
 
 	private Rectangle2f nameBox = null;
-	private Rectangle2f enterActionBox = null;
-	private Rectangle2f insideActionBox = null;
-	private Rectangle2f exitActionBox = null;
 
 	public FAStateFigure(UUID viewId, float x, float y) {
 		super(viewId, x, y);
@@ -39,27 +36,6 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 
 	public FAStateFigure(UUID viewId) {
 		this(viewId, 0, 0);
-	}
-
-	public boolean isInEnterActionBox(Point2D position) {
-		if (position!=null && this.enterActionBox!=null) {
-			return this.enterActionBox.contains(position);
-		}
-		return false;
-	}
-
-	public boolean isInInsideActionBox(Point2D position) {
-		if (position!=null && this.insideActionBox!=null) {
-			return this.insideActionBox.contains(position);
-		}
-		return false;
-	}
-
-	public boolean isInExitActionBox(Point2D position) {
-		if (position!=null && this.exitActionBox!=null) {
-			return this.exitActionBox.contains(position);
-		}
-		return false;
 	}
 
 	public boolean isInNameBox(Point2D position) {
