@@ -21,17 +21,22 @@
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:exported="false" android:icon="@drawable/ic_filechooser" android:label="@string/choose_file" android:name="org.arakhne.afc.ui.android.filechooser.FileChooserActivity">
+        <activity
+            android:name="org.arakhne.afc.ui.android.filechooser.FileChooserActivity"
+            android:exported="false"
+            android:icon="@drawable/ic_filechooser"
+            android:label="@string/choose_file" >
             <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT"/>
+                <action android:name="android.intent.action.GET_CONTENT" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.OPENABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
 
-                <data android:mimeType="*/*"/>
+                <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
     </application>

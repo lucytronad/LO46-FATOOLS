@@ -1,0 +1,37 @@
+# Eclipse
+.classpath
+.metadata/
+.settings/
+.project
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.ideal/
+
+# NetBean
+bin/
+
+# Subversion and CVS
+.svn/
+.cvs/
+
+# Maven
+target/
+
+# Generated files for Android
+gen/*
+
+# Compiled files
+*.class
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.exe
+
+# Temp files
+*.bak
+*~
