@@ -8,14 +8,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@android:string/unknownName" />
-    
-    <CheckBox
-        android:id="@+id/isaccepting"
-        android:layout_width="0dp"
+        android:text="@string/simulation_string" />
+
+    <EditText
+        android:id="@+id/edit_simulation_string"
+        android:layout_width="0px"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dip"
+        android:layout_marginTop="4dip"
         android:layout_weight="1"
-        android:text="@string/is_accepting"
-        android:textColor="#FFFFFF" />
-    
+        android:imeActionId="1337"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:width="100sp" />
+
 </LinearLayout>

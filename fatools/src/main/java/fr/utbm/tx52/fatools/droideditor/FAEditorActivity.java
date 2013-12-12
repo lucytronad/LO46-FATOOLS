@@ -19,11 +19,6 @@ import org.arakhne.afc.ui.undo.UndoManager;
 import org.arakhne.afc.util.MultiValue;
 import org.arakhne.afc.vmutil.FileSystem;
 import org.arakhne.neteditor.android.actionmode.FigureActionModeManager;
-import org.arakhne.neteditor.android.actionmode.creation.BitmapDecorationCreationMode;
-import org.arakhne.neteditor.android.actionmode.creation.EllipseDecorationCreationMode;
-import org.arakhne.neteditor.android.actionmode.creation.PolygonDecorationCreationMode;
-import org.arakhne.neteditor.android.actionmode.creation.PolylineDecorationCreationMode;
-import org.arakhne.neteditor.android.actionmode.creation.RectangleDecorationCreationMode;
 import org.arakhne.neteditor.android.actionmode.creation.TextDecorationCreationMode;
 import org.arakhne.neteditor.android.activity.AbstractEditorActivity;
 import org.arakhne.neteditor.android.activity.FigureView;
@@ -33,11 +28,11 @@ import org.arakhne.neteditor.formalism.ModelObject;
 
 import fr.utbm.tx52.fatools.R;
 import fr.utbm.tx52.fatools.constructs.FAEdge;
-import fr.utbm.tx52.fatools.constructs.FAState;
 import fr.utbm.tx52.fatools.constructs.FiniteAutomata;
 import fr.utbm.tx52.fatools.figures.FAEdgeFigure;
 import fr.utbm.tx52.fatools.figures.FAFigureFactory;
 import fr.utbm.tx52.fatools.figures.FAStateFigure;
+import fr.utbm.tx52.fatools.simulator.SimulationMode;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -103,7 +98,7 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 		}
 		else if (transitionFigure.isSet() && !transitionFigure.isMultipleDifferentValues()) {
 			FAEdgeFigure figure = transitionFigure.get();
-			String actionCode = figure.getModelObject().getAction();
+			String actionCode = figure.getModelObject().getActionCode();
 			if (actionCode==null || actionCode.isEmpty()) {
 				actionCode = DEFAULT_ACTION_NAME;
 			}
@@ -180,23 +175,8 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 						}
 
 						ModelObject obj = getFigureView().getGraph().findModelObject(id);
-						if (obj instanceof FAState) {
-							FAState state = (FAState)obj;
-							switch(actionId) {
-							case 1:
-								state.setEnterAction(actionName, content);
-								break;
-							case 2:
-								state.setAction(actionName, content);
-								break;
-							case 3:
-								state.setExitAction(actionName, content);
-								break;
-							default:
-							}
-						}
-						else if (obj instanceof FAEdge) {
-							((FAEdge)obj).setAction(actionName, content);
+						if (obj instanceof FAEdge) {
+							((FAEdge)obj).setAction(actionName);
 						}
 					}
 				}
@@ -221,10 +201,17 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 		try {
 			FigureView<FiniteAutomata> viewer = getFigureView();
 			switch(item.getItemId()) {
+			case R.id.menu_fa_start_simulation:
+			{
+				SimulationMode simulationMode = new SimulationMode(viewer);
+				startActionMode(simulationMode);
+				return true;
+				
+			}
 			case R.id.menu_fa_create_start:
 			{
 				FAStartStateCreationMode mode = new FAStartStateCreationMode();
-				//FigureView<?> view = getFigureView();
+				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
@@ -232,7 +219,7 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			case R.id.menu_fa_create_state:
 			{
 				FAStateCreationMode mode = new FAStateCreationMode();
-				//FigureView<?> view = getFigureView();
+				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
@@ -240,27 +227,11 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			case R.id.menu_fa_create_edge:
 			{
 				FAEdgeCreationMode mode = new FAEdgeCreationMode();
-				//FigureView<?> view = getFigureView();
+				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
 			}
-			/*case R.id.menu_decoration_rectangle:
-			{
-				RectangleDecorationCreationMode mode = new RectangleDecorationCreationMode();
-				FigureView<?> view = getFigureView();
-				FigureActionModeManager modeManager = view.getActionModeManager();
-				modeManager.startMode(mode);
-				return true;
-			}
-			case R.id.menu_decoration_ellipse:
-			{
-				EllipseDecorationCreationMode mode = new EllipseDecorationCreationMode();
-				FigureView<?> view = getFigureView();
-				FigureActionModeManager modeManager = view.getActionModeManager();
-				modeManager.startMode(mode);
-				return true;
-			}*/
 			case R.id.menu_decoration_text:
 			{
 				TextDecorationCreationMode mode = new TextDecorationCreationMode();
@@ -269,30 +240,6 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 				modeManager.startMode(mode);
 				return true;
 			}
-			/*case R.id.menu_decoration_image:
-			{
-				BitmapDecorationCreationMode mode = new BitmapDecorationCreationMode();
-				FigureView<?> view = getFigureView();
-				FigureActionModeManager modeManager = view.getActionModeManager();
-				modeManager.startMode(mode);
-				return true;
-			}
-			case R.id.menu_decoration_polyline:
-			{
-				PolylineDecorationCreationMode mode = new PolylineDecorationCreationMode();
-				FigureView<?> view = getFigureView();
-				FigureActionModeManager modeManager = view.getActionModeManager();
-				modeManager.startMode(mode);
-				return true;
-			}
-			case R.id.menu_decoration_polygon:
-			{
-				PolygonDecorationCreationMode mode = new PolygonDecorationCreationMode();
-				FigureView<?> view = getFigureView();
-				FigureActionModeManager modeManager = view.getActionModeManager();
-				modeManager.startMode(mode);
-				return true;
-			}*/
 			case R.id.menu_resetView:
 				viewer.resetView();
 				return true;
@@ -376,4 +323,5 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 	protected Class<? extends FigureFactory<FiniteAutomata>> getPreferredFigureFactory() {
 		return FAFigureFactory.class;
 	}
+
 }

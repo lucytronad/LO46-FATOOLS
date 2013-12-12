@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<android.platform>15</android.platform>
-		<android.sdk.path>/opt/android-sdk</android.sdk.path>
+		<android.sdk.path>/home/lucie/Development/android-sdk-linux</android.sdk.path>
 	</properties>
 
 	<repositories>

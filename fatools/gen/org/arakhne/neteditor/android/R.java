@@ -43,23 +43,23 @@ public final class R {
 		public static final int ic_menu_decoration_text = 0x7f020016;
 		public static final int ic_menu_lock = 0x7f02001a;
 		public static final int ic_menu_multiselect = 0x7f02001b;
-		public static final int ic_menu_reset_view = 0x7f02001c;
-		public static final int ic_menu_revert_gray = 0x7f02001d;
-		public static final int ic_menu_revert_revert = 0x7f02001e;
-		public static final int ic_menu_revert_revert_gray = 0x7f02001f;
-		public static final int ic_menu_revert_revert_selector = 0x7f020020;
-		public static final int ic_menu_revert_selector = 0x7f020021;
-		public static final int ic_menu_save_gray = 0x7f020022;
-		public static final int ic_menu_save_selector = 0x7f020023;
-		public static final int ic_menu_save_upload = 0x7f020024;
-		public static final int ic_menu_save_upload_gray = 0x7f020025;
-		public static final int ic_menu_save_upload_selector = 0x7f020026;
-		public static final int ic_menu_singleselect = 0x7f020027;
-		public static final int ic_menu_unlock = 0x7f020028;
-		public static final int ic_menu_up_directory = 0x7f020029;
-		public static final int ic_menu_up_directory_gray = 0x7f02002a;
-		public static final int ic_menu_up_directory_selector = 0x7f02002b;
-		public static final int ic_ngr = 0x7f02002c;
+		public static final int ic_menu_reset_view = 0x7f02001d;
+		public static final int ic_menu_revert_gray = 0x7f02001e;
+		public static final int ic_menu_revert_revert = 0x7f02001f;
+		public static final int ic_menu_revert_revert_gray = 0x7f020020;
+		public static final int ic_menu_revert_revert_selector = 0x7f020021;
+		public static final int ic_menu_revert_selector = 0x7f020022;
+		public static final int ic_menu_save_gray = 0x7f020023;
+		public static final int ic_menu_save_selector = 0x7f020024;
+		public static final int ic_menu_save_upload = 0x7f020025;
+		public static final int ic_menu_save_upload_gray = 0x7f020026;
+		public static final int ic_menu_save_upload_selector = 0x7f020027;
+		public static final int ic_menu_singleselect = 0x7f020028;
+		public static final int ic_menu_unlock = 0x7f02002d;
+		public static final int ic_menu_up_directory = 0x7f02002e;
+		public static final int ic_menu_up_directory_gray = 0x7f02002f;
+		public static final int ic_menu_up_directory_selector = 0x7f020030;
+		public static final int ic_ngr = 0x7f020031;
 	}
 	public static final class id {
 		public static final int about_application_id = 0x7f090000;
@@ -80,26 +80,26 @@ public final class R {
 		public static final int fileChooserFileIcon = 0x7f09000f;
 		public static final int fileChooserFileName = 0x7f090010;
 		public static final int fileChooserFilenameField = 0x7f090013;
-		public static final int fileChooserParentDirectoryMenu = 0x7f090027;
-		public static final int fileChooserSaveMenu = 0x7f090026;
+		public static final int fileChooserParentDirectoryMenu = 0x7f09002e;
+		public static final int fileChooserSaveMenu = 0x7f09002d;
 		public static final int filechooserTextView1 = 0x7f090012;
 		public static final int isfilled = 0x7f090015;
 		public static final int isframed = 0x7f090014;
-		public static final int menu_delete_selection = 0x7f09002a;
-		public static final int menu_edit_selection = 0x7f090029;
-		public static final int menu_finalize_polypoint_object = 0x7f090028;
-		public static final int menu_invert_selection = 0x7f09002e;
-		public static final int menu_locking_action = 0x7f09002b;
-		public static final int menu_multi_selection_mode = 0x7f09002c;
-		public static final int menu_pack_objects = 0x7f09002f;
-		public static final int menu_resetView = 0x7f09001f;
-		public static final int menu_revert = 0x7f09001d;
-		public static final int menu_revert_revert = 0x7f09001e;
-		public static final int menu_select_all = 0x7f09002d;
+		public static final int menu_delete_selection = 0x7f090031;
+		public static final int menu_edit_selection = 0x7f090030;
+		public static final int menu_finalize_polypoint_object = 0x7f09002f;
+		public static final int menu_invert_selection = 0x7f090035;
+		public static final int menu_locking_action = 0x7f090032;
+		public static final int menu_multi_selection_mode = 0x7f090033;
+		public static final int menu_pack_objects = 0x7f090036;
+		public static final int menu_resetView = 0x7f090026;
+		public static final int menu_revert = 0x7f090024;
+		public static final int menu_revert_revert = 0x7f090025;
+		public static final int menu_select_all = 0x7f090034;
 		public static final int text = 0x7f090016;
-		public static final int textEditor = 0x7f090018;
-		public static final int textEditorSaveMenu = 0x7f090030;
-		public static final int textEditorUploadMenu = 0x7f090031;
+		public static final int textEditor = 0x7f090019;
+		public static final int textEditorSaveMenu = 0x7f090037;
+		public static final int textEditorUploadMenu = 0x7f090038;
 		public static final int title = 0x7f090003;
 	}
 	public static final class layout {
@@ -111,16 +111,16 @@ public final class R {
 		public static final int filechooser_save = 0x7f030006;
 		public static final int neteditor_actionmodetextdecoration = 0x7f030007;
 		public static final int neteditor_activity = 0x7f030008;
-		public static final int texteditor = 0x7f030009;
+		public static final int texteditor = 0x7f03000a;
 	}
 	public static final class menu {
-		public static final int filechooser_menu = 0x7f080001;
-		public static final int filechooser_open_menu = 0x7f080002;
-		public static final int filechooser_save_menu = 0x7f080003;
-		public static final int neteditor_creationmode = 0x7f080004;
-		public static final int neteditor_polypointcreationmode = 0x7f080005;
-		public static final int neteditor_selectionbar = 0x7f080006;
-		public static final int texteditor_menu = 0x7f080007;
+		public static final int filechooser_menu = 0x7f080002;
+		public static final int filechooser_open_menu = 0x7f080003;
+		public static final int filechooser_save_menu = 0x7f080004;
+		public static final int neteditor_creationmode = 0x7f080005;
+		public static final int neteditor_polypointcreationmode = 0x7f080006;
+		public static final int neteditor_selectionbar = 0x7f080007;
+		public static final int texteditor_menu = 0x7f080008;
 	}
 	public static final class string {
 		public static final int about_this_app = 0x7f040000;

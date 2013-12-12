@@ -2,12 +2,17 @@ package fr.utbm.tx52.fatools.figures;
 
 import java.util.UUID;
 
+import org.arakhne.afc.math.generic.Point2D;
+import org.arakhne.afc.ui.vector.PathUtil;
+import org.arakhne.neteditor.fig.figure.Figure;
 import org.arakhne.neteditor.fig.figure.coercion.CoercedFigure;
 import org.arakhne.neteditor.fig.figure.coercion.CoercedTextFigure;
 import org.arakhne.neteditor.fig.figure.edge.PolylineEdgeFigure;
 import org.arakhne.neteditor.fig.figure.edge.symbol.TriangleEdgeSymbol;
 import org.arakhne.neteditor.fig.view.ViewComponentPropertyChangeEvent;
 import org.arakhne.neteditor.fig.view.ViewComponentPropertyChangeListener;
+import org.arakhne.neteditor.formalism.ModelObjectEvent;
+import org.arakhne.neteditor.formalism.ModelObjectEvent.Type;
 
 import fr.utbm.tx52.fatools.constructs.FAEdge;
 
@@ -22,15 +27,7 @@ public class FAEdgeFigure extends PolylineEdgeFigure<FAEdge> {
 		public void propertyChange(ViewComponentPropertyChangeEvent event) {
 			if (PROPERTY_TEXT.equals(event.getPropertyName())) {
 				String text = (String)event.getNewValue();
-				int idx = text.indexOf("/"); //$NON-NLS-1$
-				if (idx==-1) {
-					getModelObject().setGuard(text);
-					getModelObject().setAction(null);
-				}
-				else {
-					getModelObject().setGuard(text.substring(0, idx));
-					getModelObject().setAction(text.substring(idx+1));
-				}
+				getModelObject().setAction(text);
 			}
 		}
 	};
@@ -64,6 +61,38 @@ public class FAEdgeFigure extends PolylineEdgeFigure<FAEdge> {
 			fig.removeViewComponentPropertyChangeListener(this.listener);
 		}
 		return fig;
+	}
+
+	@Override
+	protected void updateFromModel(ModelObjectEvent event) {
+		super.updateFromModel(event);
+		if ((event==null)
+				|| (event.getType()==Type.PROPERTY_CHANGE &&
+				FAEdge.PROPERTY_ACTION.equals(event.getPropertyName()))) { 
+			FAEdge mo = getModelObject();
+			String label = mo==null ? "" : mo.getExternalLabel(); //$NON-NLS-1$
+			if (label.isEmpty()) {
+				removeAssociatedFigureFromView("majorLabel"); //$NON-NLS-1$
+			}
+			else {
+				Figure figure = getAssociatedFigureInView("majorLabel"); //$NON-NLS-1$
+				if (figure==null) {
+					Point2D anchor = PathUtil.interpolate(getPath(), .5f);
+					CoercedTextFigure text = new CoercedTextFigure(
+							getViewUUID(),
+							label,
+							anchor.getX(),
+							anchor.getY());
+					text.setAnchorDescriptor(.5f);
+					addAssociatedFigureIntoView("majorLabel", text); //$NON-NLS-1$
+				}
+				else if (figure instanceof CoercedTextFigure) {
+					CoercedTextFigure text = (CoercedTextFigure)figure;
+					text.setText(label);
+					text.fitToContent();
+				}
+			}
+		}
 	}
 
 }

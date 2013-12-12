@@ -21,4 +21,9 @@
     <string name="undo_fa_start">the creation of an start state</string>
     <string name="undo_fa_edge">the creation of a transition</string>
     
+    <string name="simulation_string">Simulation string :</string>
+    
+    <string name="property_label_action">Action</string>
+    <string name="property_label_drawingmethod">Drawing method</string>
+    
 </resources>

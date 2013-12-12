@@ -1,5 +1,7 @@
 package fr.utbm.tx52.fatools.constructs;
 
+import java.util.Map;
+
 import org.arakhne.neteditor.formalism.standard.StandardEdge;
 
 public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAnchor, FAEdge> {
@@ -9,11 +11,9 @@ public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAncho
 	 */
 	private static final long serialVersionUID = 3397413506768740027L;
 
-	public static final String PROPERTY_GUARD = "guard";
 	public static final String PROPERTY_ACTION = "action";
 
 	private String action = null;
-	private String guard = null;
 
 	public FAEdge() {
 
@@ -97,20 +97,35 @@ public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAncho
 			setActionCode(code);
 		}
 	}
-
-	public String getGuard() {
-		return this.guard;
+	
+	@Override
+	public Map<String, Object> getProperties() {
+		Map<String,Object> properties = super.getProperties();
+		properties.put(PROPERTY_ACTION, this.action);
+		return properties;
 	}
+	
+	@Override
+    public Map<String, Class<?>> getUIEditableProperties() {
+		Map<String,Class<?>> properties = super.getUIEditableProperties();
+		properties.put(PROPERTY_ACTION, String.class);
+    	return properties;
+    }
 
-	public void setGuard(String guard) {
-		String ng = (guard==null || guard.isEmpty()) ? null : guard;
-		if ((this.guard==null && ng!=null) ||
-				(this.guard!=null && !this.guard.equals(ng))) {
-			String old = this.guard;
-			this.guard = ng;
-			firePropertyChanged(PROPERTY_GUARD, old, this.guard); 
+	@Override
+	public void setProperties(Map<String, Object> properties) {
+		super.setProperties(properties);
+		if (properties!=null) {
+			setAction(propGetString(PROPERTY_ACTION, this.action, false, properties));
 		}
 	}
-
+	
+	@Override
+	public String getExternalLabel() {
+		if (getAction()!=null) {
+			return this.getName();
+		}
+		return "";
+	}
 
 }

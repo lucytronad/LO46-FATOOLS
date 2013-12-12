@@ -24,14 +24,14 @@ public final class R {
 		public static final int hatchs = 0x7f020005;
 		public static final int ic_file = 0x7f020008;
 		public static final int ic_folder = 0x7f02000a;
-		public static final int ic_menu_save_gray = 0x7f020022;
-		public static final int ic_menu_save_selector = 0x7f020023;
-		public static final int ic_menu_save_upload = 0x7f020024;
-		public static final int ic_menu_save_upload_gray = 0x7f020025;
-		public static final int ic_menu_save_upload_selector = 0x7f020026;
-		public static final int ic_menu_up_directory = 0x7f020029;
-		public static final int ic_menu_up_directory_gray = 0x7f02002a;
-		public static final int ic_menu_up_directory_selector = 0x7f02002b;
+		public static final int ic_menu_save_gray = 0x7f020023;
+		public static final int ic_menu_save_selector = 0x7f020024;
+		public static final int ic_menu_save_upload = 0x7f020025;
+		public static final int ic_menu_save_upload_gray = 0x7f020026;
+		public static final int ic_menu_save_upload_selector = 0x7f020027;
+		public static final int ic_menu_up_directory = 0x7f02002e;
+		public static final int ic_menu_up_directory_gray = 0x7f02002f;
+		public static final int ic_menu_up_directory_selector = 0x7f020030;
 	}
 	public static final class id {
 		public static final int about_application_id = 0x7f090000;
@@ -51,12 +51,12 @@ public final class R {
 		public static final int fileChooserFileIcon = 0x7f09000f;
 		public static final int fileChooserFileName = 0x7f090010;
 		public static final int fileChooserFilenameField = 0x7f090013;
-		public static final int fileChooserParentDirectoryMenu = 0x7f090027;
-		public static final int fileChooserSaveMenu = 0x7f090026;
+		public static final int fileChooserParentDirectoryMenu = 0x7f09002e;
+		public static final int fileChooserSaveMenu = 0x7f09002d;
 		public static final int filechooserTextView1 = 0x7f090012;
-		public static final int textEditor = 0x7f090018;
-		public static final int textEditorSaveMenu = 0x7f090030;
-		public static final int textEditorUploadMenu = 0x7f090031;
+		public static final int textEditor = 0x7f090019;
+		public static final int textEditorSaveMenu = 0x7f090037;
+		public static final int textEditorUploadMenu = 0x7f090038;
 	}
 	public static final class layout {
 		public static final int about = 0x7f030000;
@@ -65,13 +65,13 @@ public final class R {
 		public static final int filechooser_onefile = 0x7f030004;
 		public static final int filechooser_open = 0x7f030005;
 		public static final int filechooser_save = 0x7f030006;
-		public static final int texteditor = 0x7f030009;
+		public static final int texteditor = 0x7f03000a;
 	}
 	public static final class menu {
-		public static final int filechooser_menu = 0x7f080001;
-		public static final int filechooser_open_menu = 0x7f080002;
-		public static final int filechooser_save_menu = 0x7f080003;
-		public static final int texteditor_menu = 0x7f080007;
+		public static final int filechooser_menu = 0x7f080002;
+		public static final int filechooser_open_menu = 0x7f080003;
+		public static final int filechooser_save_menu = 0x7f080004;
+		public static final int texteditor_menu = 0x7f080008;
 	}
 	public static final class string {
 		public static final int about_this_app = 0x7f040000;

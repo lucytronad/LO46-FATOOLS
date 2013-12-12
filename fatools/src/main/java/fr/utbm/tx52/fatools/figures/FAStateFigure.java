@@ -38,13 +38,12 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 
 	@Override
 	protected void paintNode(ViewGraphics2D g) {
+
+		super.paintNode(g);
+
 		// Ask to the graphic tool to output the name of
 		// the name inside the next drawn shape
-		g.setInteriorText(getModelObject().getName());
-
-		// Draw the default circle (filling and outlining).
-		// Remember that an interior text will be paint also.
-		super.paintNode(g);
+		//g.setInteriorText(getModelObject().getName());
 
 		boolean isAccepting = getModelObject().isAccepting();
 		if(isAccepting) {
@@ -57,7 +56,10 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 			g.setInteriorPainted(false);
 			g.setOutlineDrawn(true);
 			g.draw(insideOval);
+
 		}
+
+
 	}
 
 }
