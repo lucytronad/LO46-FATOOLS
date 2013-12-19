@@ -68,7 +68,7 @@ public class FiniteAutomata extends StandardGraph<FiniteAutomata, AbstractFANode
 			Set<String> actions = new TreeSet<String>(); 
 
 			for(FAEdge edge : getEdges()) {
-				String name = edge.getAction();
+				String name = edge.getLabel();
 				if (name!=null && !name.isEmpty())
 					actions.add(name);
 			}

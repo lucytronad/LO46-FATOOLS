@@ -5,7 +5,6 @@ import java.util.UUID;
 import org.arakhne.afc.math.continous.object2d.Ellipse2f;
 import org.arakhne.afc.math.continous.object2d.Rectangle2f;
 import org.arakhne.afc.math.generic.Point2D;
-import org.arakhne.afc.ui.vector.Color;
 import org.arakhne.afc.ui.vector.Dimension;
 import org.arakhne.afc.ui.vector.Font;
 import org.arakhne.afc.ui.vector.VectorToolkit;
@@ -38,7 +37,16 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 
 	@Override
 	protected void paintNode(ViewGraphics2D g) {
-
+		
+		if(getModelObject().isSuccessfull())
+			g.setOutlineColor(VectorToolkit.color(0, 255, 0));
+		else if(getModelObject().hasFailed())
+			g.setOutlineColor(VectorToolkit.color(255, 0, 0));
+		else if(getModelObject().isActive())
+			g.setOutlineColor(VectorToolkit.color(0, 0, 255));
+		else
+			g.setOutlineColor(VectorToolkit.color(0, 0, 0));
+		
 		super.paintNode(g);
 
 		// Ask to the graphic tool to output the name of

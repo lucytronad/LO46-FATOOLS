@@ -11,9 +11,9 @@ public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAncho
 	 */
 	private static final long serialVersionUID = 3397413506768740027L;
 
-	public static final String PROPERTY_ACTION = "action";
+	public static final String PROPERTY_LABEL = "label";
 
-	private String action = null;
+	private String label = null;
 
 	public FAEdge() {
 
@@ -35,80 +35,32 @@ public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAncho
 		setEndAnchor(anchor);
 	}
 
-	public String getAction() {
-		return this.action;
+	public String getLabel() {
+		return this.label;
 	}
 
-	public void setAction(Object object) {
-		String na = (action==null || action.isEmpty()) ? null : action;
-		if ((this.action==null && na!=null) ||
-				(this.action!=null && !this.action.equals(na))) {
-			String old = this.action;
-			this.action = na;
-			ensureActionCode(old, action);
-			firePropertyChanged(PROPERTY_ACTION, old, this.action); 
+	public void setLabel(String label) {
+		String na = (label==null || label.isEmpty()) ? null : label;
+		if ((this.label==null && na!=null) ||
+				(this.label!=null && !this.label.equals(na))) {
+			String old = this.label;
+			this.label = na;
+			firePropertyChanged(PROPERTY_LABEL, old, this.label); 
 		}
 
-	}
-
-	private void ensureActionCode(String oldAction, String newAction) {
-		String newCode = getActionCode(newAction);
-		if (newCode==null) {
-			String oldCode = getActionCode(oldAction);
-			if(oldCode!=null) {
-				setActionCode(oldCode);
-			}
-		}
-	}
-
-	public String getActionCode() {
-		FiniteAutomata machine = getGraph();
-		if (machine!=null) {
-			return machine.getActionCode(getAction());
-		}
-		return null;
-	}
-
-	protected String getActionCode(String actionName) {
-        FiniteAutomata machine = getGraph();
-        if (machine!=null) {
-                return machine.getActionCode(actionName);
-        }
-        return null;
-}
-	
-	public void setActionCode(String code) {
-		FiniteAutomata machine = getGraph();
-		if (machine!=null) {
-			machine.setActionCode(getAction(), code);
-		}
-	}
-
-	public void setAction(String action, String code) {
-		String na = (action==null || action.isEmpty()) ? null : action;
-		if ((this.action==null && na!=null) ||
-				(this.action!=null && !this.action.equals(na))) {
-			String old = this.action;
-			this.action = na;
-			setActionCode(code);
-			firePropertyChanged(PROPERTY_ACTION, old, this.action); 
-		}
-		else {
-			setActionCode(code);
-		}
 	}
 	
 	@Override
 	public Map<String, Object> getProperties() {
 		Map<String,Object> properties = super.getProperties();
-		properties.put(PROPERTY_ACTION, this.action);
+		properties.put(PROPERTY_LABEL, this.label);
 		return properties;
 	}
 	
 	@Override
     public Map<String, Class<?>> getUIEditableProperties() {
 		Map<String,Class<?>> properties = super.getUIEditableProperties();
-		properties.put(PROPERTY_ACTION, String.class);
+		properties.put(PROPERTY_LABEL, String.class);
     	return properties;
     }
 
@@ -116,16 +68,13 @@ public class FAEdge extends StandardEdge<FiniteAutomata, AbstractFANode, FAAncho
 	public void setProperties(Map<String, Object> properties) {
 		super.setProperties(properties);
 		if (properties!=null) {
-			setAction(propGetString(PROPERTY_ACTION, this.action, false, properties));
+			setLabel(propGetString(PROPERTY_LABEL, this.label, true, properties));
 		}
 	}
 	
 	@Override
 	public String getExternalLabel() {
-		if (getAction()!=null) {
-			return this.getName();
-		}
-		return "";
+		return getLabel();
 	}
 
 }

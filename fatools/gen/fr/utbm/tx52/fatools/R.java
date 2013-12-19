@@ -222,13 +222,13 @@ public final class R {
         public static final int no=0x7f04000e;
         public static final int one_selected=0x7f040023;
         public static final int property_dialog_title=0x7f040006;
-        public static final int property_label_action=0x7f04004e;
         public static final int property_label_drawingmethod=0x7f04004f;
         public static final int property_label_filled=0x7f040038;
         public static final int property_label_fillingcolor=0x7f04003c;
         public static final int property_label_framed=0x7f040039;
         public static final int property_label_isclosed=0x7f04003b;
         public static final int property_label_islocked=0x7f04003a;
+        public static final int property_label_label=0x7f04004e;
         public static final int property_label_linecolor=0x7f04003d;
         public static final int property_label_name=0x7f040008;
         public static final int property_label_text=0x7f040009;

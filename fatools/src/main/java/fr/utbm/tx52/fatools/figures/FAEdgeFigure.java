@@ -27,7 +27,7 @@ public class FAEdgeFigure extends PolylineEdgeFigure<FAEdge> {
 		public void propertyChange(ViewComponentPropertyChangeEvent event) {
 			if (PROPERTY_TEXT.equals(event.getPropertyName())) {
 				String text = (String)event.getNewValue();
-				getModelObject().setAction(text);
+				getModelObject().setLabel(text);
 			}
 		}
 	};
@@ -68,10 +68,10 @@ public class FAEdgeFigure extends PolylineEdgeFigure<FAEdge> {
 		super.updateFromModel(event);
 		if ((event==null)
 				|| (event.getType()==Type.PROPERTY_CHANGE &&
-				FAEdge.PROPERTY_ACTION.equals(event.getPropertyName()))) { 
+				FAEdge.PROPERTY_LABEL.equals(event.getPropertyName()))) { 
 			FAEdge mo = getModelObject();
 			String label = mo==null ? "" : mo.getExternalLabel(); //$NON-NLS-1$
-			if (label.isEmpty()) {
+			if (label==null || label.isEmpty()) {
 				removeAssociatedFigureFromView("majorLabel"); //$NON-NLS-1$
 			}
 			else {

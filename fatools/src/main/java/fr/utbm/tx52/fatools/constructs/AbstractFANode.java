@@ -1,5 +1,7 @@
 package fr.utbm.tx52.fatools.constructs;
 
+import java.util.Map;
+
 import org.arakhne.neteditor.formalism.standard.StandardMonoAnchorNode;
 
 public abstract class AbstractFANode extends StandardMonoAnchorNode<FiniteAutomata, AbstractFANode, FAAnchor, FAEdge> {
@@ -9,7 +11,10 @@ public abstract class AbstractFANode extends StandardMonoAnchorNode<FiniteAutoma
 	 */
 	private static final long serialVersionUID = 8602932924212177344L;
 
+	public static final String PROPERTY_ACTIVE = "active";
+	
 	private boolean isActive = false;
+	
 	
 	public AbstractFANode() {
 		this(null);
@@ -30,12 +35,18 @@ public abstract class AbstractFANode extends StandardMonoAnchorNode<FiniteAutoma
 		return null;
 	}
 	
-	public boolean isActivfe() {
+	public boolean isActive() {
 		return this.isActive;
 	}
 
 	public void setActive(boolean active) {
-		this.isActive=active;
+		if(!(isActive==active))
+		{
+			boolean old = isActive;
+			isActive=active;
+			firePropertyChanged(PROPERTY_ACTIVE, old, isActive);
+		}
 	}
+
 
 }

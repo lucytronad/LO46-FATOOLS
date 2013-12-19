@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.arakhne.afc.math.continous.object2d.Ellipse2f;
 import org.arakhne.afc.math.continous.object2d.Rectangle2f;
-import org.arakhne.afc.ui.vector.Color;
+import org.arakhne.afc.ui.vector.VectorToolkit;
 import org.arakhne.neteditor.fig.figure.node.CircleNodeFigure;
 import org.arakhne.neteditor.fig.graphics.ViewGraphics2D;
 
@@ -31,6 +31,15 @@ public class FAStartStateFigure extends CircleNodeFigure<FAStartState, FAAnchor>
 
 	@Override
 	protected void paintNode(ViewGraphics2D g) {
+		
+		boolean isActive = getModelObject().isActive();
+		if(isActive) {
+			g.setFillColor(VectorToolkit.color(0, 255, 0));
+		}
+		else {
+			g.setFillColor(VectorToolkit.color(0, 0, 0));
+		}
+		
 		Rectangle2f figureBounds = g.getCurrentViewComponentBounds();
 		Ellipse2f oval = new Ellipse2f(
 				figureBounds.getMinX(),
@@ -38,10 +47,8 @@ public class FAStartStateFigure extends CircleNodeFigure<FAStartState, FAAnchor>
 				figureBounds.getWidth(),
 				figureBounds.getHeight());
 		g.setOutlineDrawn(false);
-		g.setInteriorPainted(true);
-		Color old = g.setFillColor(getLineColor());
+		g.setInteriorPainted(true);;
 		g.draw(oval);
-		g.setFillColor(old);
 	}
 
 }

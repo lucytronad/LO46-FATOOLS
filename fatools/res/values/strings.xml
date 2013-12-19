@@ -23,7 +23,7 @@
     
     <string name="simulation_string">Simulation string :</string>
     
-    <string name="property_label_action">Action</string>
+    <string name="property_label_label">Label</string>
     <string name="property_label_drawingmethod">Drawing method</string>
     
 </resources>

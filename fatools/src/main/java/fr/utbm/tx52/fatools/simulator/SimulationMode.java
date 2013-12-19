@@ -3,6 +3,9 @@ package fr.utbm.tx52.fatools.simulator;
 import org.arakhne.neteditor.android.activity.FigureView;
 
 import fr.utbm.tx52.fatools.R;
+import fr.utbm.tx52.fatools.constructs.AbstractFANode;
+import fr.utbm.tx52.fatools.constructs.FANodeType;
+import fr.utbm.tx52.fatools.constructs.FAState;
 import fr.utbm.tx52.fatools.constructs.FiniteAutomata;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,9 +18,11 @@ import android.widget.EditText;
 public class SimulationMode implements android.view.ActionMode.Callback {
 
 	private Simulator simulator=null;
+	private FiniteAutomata finiteAutomata=null;
 	
 	public SimulationMode(FigureView<FiniteAutomata> viewer) {
-		this.simulator = new Simulator(viewer.getGraph());
+		this.finiteAutomata=viewer.getGraph();
+		this.simulator = new Simulator(this.finiteAutomata);
 	}
 	
 	@Override
@@ -29,11 +34,13 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 		}
 		case R.id.menu_fa_step_forward_simulation:
 		{
+			simulator.runStepByStepSimulation();
 			return true;
 		}
 		case R.id.menu_fa_play_simulation:
 		{
-			
+			while(simulator.runStepByStepSimulation());
+			return true;
 		}
 		}
 		return false;
@@ -56,6 +63,7 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 			@Override
 			public void afterTextChanged(Editable s) {
 				simulator.setSimulationString(simulationString.getText().toString());
+				simulator.reset();
 			}
 		});
 		return true;
@@ -63,7 +71,16 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
-		// TODO Auto-generated method stub
+		this.simulator=null;
+		for(AbstractFANode node : finiteAutomata.getNodes()) {
+			node.setActive(false);
+			if(node.getType()==FANodeType.STATE) {
+				((FAState)node).setFailed(false);
+				((FAState)node).setSuccessfull(false);
+			}
+		}
+		this.finiteAutomata=null;
+		
 		
 	}
 
