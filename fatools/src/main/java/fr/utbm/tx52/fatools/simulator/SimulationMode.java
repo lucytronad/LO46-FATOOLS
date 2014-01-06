@@ -19,6 +19,8 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 
 	private Simulator simulator=null;
 	private FiniteAutomata finiteAutomata=null;
+	private boolean toReset = false;
+	private String simString="";
 	
 	public SimulationMode(FigureView<FiniteAutomata> viewer) {
 		this.finiteAutomata=viewer.getGraph();
@@ -34,12 +36,29 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 		}
 		case R.id.menu_fa_step_forward_simulation:
 		{
-			simulator.runStepByStepSimulation();
+			if(toReset==true)
+			{
+				simulator.reset();				
+				simulator.setSimulationString(simString);
+				toReset=false;
+				return true;
+			}
+			if(simulator.runStepByStepSimulation()==false)
+				toReset=true;
 			return true;
+
 		}
 		case R.id.menu_fa_play_simulation:
 		{
+			if(toReset==true)
+			{
+				simulator.reset();
+				simulator.setSimulationString(simString);
+				toReset=false;
+				return true;
+			}			
 			while(simulator.runStepByStepSimulation());
+			toReset=true;
 			return true;
 		}
 		}
@@ -62,8 +81,9 @@ public class SimulationMode implements android.view.ActionMode.Callback {
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				simulator.setSimulationString(simulationString.getText().toString());
+				simString = simulationString.getText().toString();
 				simulator.reset();
+				simulator.setSimulationString(simString);
 			}
 		});
 		return true;

@@ -7,7 +7,6 @@ import java.util.Set;
 import fr.utbm.tx52.fatools.constructs.AbstractFANode;
 import fr.utbm.tx52.fatools.constructs.FAEdge;
 import fr.utbm.tx52.fatools.constructs.FANodeType;
-import fr.utbm.tx52.fatools.constructs.FAStartState;
 import fr.utbm.tx52.fatools.constructs.FAState;
 import fr.utbm.tx52.fatools.constructs.FiniteAutomata;
 
@@ -16,7 +15,7 @@ public class Simulator {
 	private String simulationString;
 	private FiniteAutomata simulationGraph;
 	private List<AbstractFANode> activeStates;
-	private List<FAState> currentStates;
+	private boolean started = false;
 
 	public Simulator() {}
 
@@ -24,23 +23,24 @@ public class Simulator {
 		simulationGraph=graph;
 		simulationString="";
 		activeStates = new ArrayList<AbstractFANode>();
-		currentStates = new ArrayList<FAState>();
 		reset();
 	}
 
 	public void reset() {
 		activeStates.clear();
+		started=false;
 		Set<AbstractFANode> nodes = simulationGraph.getNodes();
 		for(AbstractFANode node : nodes) {
 			if(node.getType()==FANodeType.START_STATE) {
 				activeStates.add(node);
 				node.setActive(true);
+				node.setFailed(false);
 			}
 			if(node.getType()==FANodeType.STATE) {
 				node.setActive(false);
-				((FAState)node).setFailed(false);
 				((FAState)node).setSuccessfull(false);
 			}
+			node.setFailed(false);
 		}
 	}
 
@@ -48,115 +48,146 @@ public class Simulator {
 		simulationString=s;
 	}
 
-	private void processStartState(FAStartState state) {
+	public boolean emptyClosure() {
 
-		if(state.getType()==FANodeType.START_STATE) {
+		boolean activeStateAdded = false;
+
+		List<AbstractFANode> currentStates = new ArrayList<AbstractFANode>(activeStates);
+		for(AbstractFANode state : currentStates) {
 
 			Iterable<FAEdge> edges = state.getOutgoingEdges();
 
 			for(FAEdge edge : edges) {
-
-				state.setActive(false);
-				activeStates.remove(state);
-
-				AbstractFANode node = edge.getEndAnchor().getNode();
-
-				node.setActive(true);
-				activeStates.add(node);
-
-				currentStates.add((FAState)node);
+				if(edge.getLabel()==null || edge.getLabel().isEmpty()) {
+					AbstractFANode node = edge.getEndAnchor().getNode();
+					if(!activeStates.contains(node)) {
+						node.setActive(true);
+						activeStates.add(node);
+						activeStateAdded = true;
+					}
+				}
 			}
 
 		}
+
+		return activeStateAdded;
 
 	}
 
-	public void processState(FAState state)
-	{
-		if(!(state.hasOutgoingEdges()) && state.getType()==FANodeType.STATE) {
-			if (!(((FAState)state).isAccepting())) {
-				((FAState)state).setFailed(true);
-			}
-		}
+	private boolean processStartState() {
 
-		Iterable<FAEdge> edges = state.getOutgoingEdges();
-		
-		for(FAEdge edge : edges) {
-			
-			if(edge.getLabel()==null || edge.getLabel().isEmpty()) {
+		List<AbstractFANode> currentStates = new ArrayList<AbstractFANode>(activeStates);
+		for(AbstractFANode state : currentStates) {
 
-				activeStates.remove(state);
-				state.setActive(false);
+			if(state.getType()==FANodeType.START_STATE) {
 
-				AbstractFANode node = edge.getEndAnchor().getNode();
+				Iterable<FAEdge> edges = state.getOutgoingEdges();
 
-				if(currentStates.contains(node)) {
-					((FAState)node).setFailed(true);
-				}
-				else
-				{
-					node.setActive(true);
-					activeStates.add(node);
-
-					currentStates.add((FAState)node);
-
-					processState((FAState)node);
-				}
-			}
-			else //the edge has a label and this is not a FAStartState
-			{
-				String label = edge.getLabel();
-				if(label.length()!=1 || simulationString.charAt(0)!=label.charAt(0)) {
-					((FAState)state).setFailed(true);
-				}
-				else {
-
-					activeStates.remove(state);
-					state.setActive(false);
+				for(FAEdge edge : edges) {
 
 					AbstractFANode node = edge.getEndAnchor().getNode();
 
+					if(node.getType()==FANodeType.START_STATE) {
+						state.setFailed(true);
+						node.setFailed(true);
+						return false;
+					}
+
 					node.setActive(true);
 					activeStates.add(node);
 				}
+
+
+
 			}
+			else {
+				((FAState)state).hasFailed();
+				return false;
+			}
+
+			state.setActive(false);
+			activeStates.remove(state);
 		}
+		return true;
+
+	}
+
+	public void processState()
+	{
+		List<AbstractFANode> currentStates = new ArrayList<AbstractFANode>(activeStates);
+		for(AbstractFANode state : currentStates) {
+
+			activeStates.remove(state);
+			state.setActive(false);
+
+			Iterable<FAEdge> edges = state.getOutgoingEdges();
+
+			for(FAEdge edge : edges) {
+				if(edge.getLabel()!=null && !edge.getLabel().isEmpty()) 
+				{
+					String label = edge.getLabel();
+					if(label.length()==1){
+						if(simulationString.charAt(0)==label.charAt(0)){
+
+							AbstractFANode node = edge.getEndAnchor().getNode();
+
+							node.setActive(true);
+							if(!activeStates.contains(node))
+								activeStates.add(node);
+						}
+					}
+				}
+
+			}
+
+
+
+		}
+
+		currentStates.clear();
+
 	}
 
 	public boolean runStepByStepSimulation() {
 
-		if(!simulationString.isEmpty()) {
-			
-			for(AbstractFANode state : activeStates) {
-				
-				if(state.getType()==FANodeType.START_STATE)
-				{
-					processStartState((FAStartState)state);
-				}
-				else {
-					processState((FAState)state);
-					simulationString=simulationString.substring(1,simulationString.length());
-					currentStates.clear();
-				}
-				
+		if(started==false) {
+			if(processStartState()==true) {
+				started=true;
+				return true;
 			}
-
-			return true;
+			else {
+				return false;
+			}
 		}
 		else {
-			for(AbstractFANode node : simulationGraph.getNodes()) {
-
-				if(node.isActive() && node.getType()==FANodeType.STATE)
-				{
-					if(((FAState)node).isAccepting())
-						((FAState)node).setSuccessfull(true);
-					else
-						((FAState)node).setFailed(true);
+			if(!simulationString.isEmpty()) {
+				if(emptyClosure()) {
+					return true;
 				}
+				processState();
+				simulationString=simulationString.substring(1,simulationString.length());
+				if (activeStates.isEmpty()) {
+					for(AbstractFANode state : simulationGraph.getNodes())
+						state.setFailed(true);
+					return false;
+				}
+				return true;
+			}
+			else {
+				for(AbstractFANode node : activeStates) {
+
+					if(node.getType()==FANodeType.STATE)
+					{
+						if(((FAState)node).isAccepting())
+							((FAState)node).setSuccessfull(true);
+						else
+							((FAState)node).setFailed(true);
+					}
+				}
+				return false;
 			}
 
-			return false;
-		}		
+		}
 
 	}
 

@@ -1,65 +1,29 @@
 package fr.utbm.tx52.fatools.droideditor;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.net.URI;
-import java.net.URL;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.arakhne.afc.io.filefilter.FileFilter;
 import org.arakhne.afc.math.generic.Point2D;
 import org.arakhne.afc.ui.android.about.AboutDialog;
 import org.arakhne.afc.ui.undo.UndoListener;
 import org.arakhne.afc.ui.undo.UndoManager;
-import org.arakhne.afc.util.MultiValue;
-import org.arakhne.afc.vmutil.FileSystem;
 import org.arakhne.neteditor.android.actionmode.FigureActionModeManager;
 import org.arakhne.neteditor.android.actionmode.creation.TextDecorationCreationMode;
 import org.arakhne.neteditor.android.activity.AbstractEditorActivity;
 import org.arakhne.neteditor.android.activity.FigureView;
 import org.arakhne.neteditor.fig.factory.FigureFactory;
 import org.arakhne.neteditor.fig.figure.Figure;
-import org.arakhne.neteditor.formalism.ModelObject;
 
 import fr.utbm.tx52.fatools.R;
-import fr.utbm.tx52.fatools.constructs.FAEdge;
 import fr.utbm.tx52.fatools.constructs.FiniteAutomata;
-import fr.utbm.tx52.fatools.figures.FAEdgeFigure;
 import fr.utbm.tx52.fatools.figures.FAFigureFactory;
-import fr.utbm.tx52.fatools.figures.FAStateFigure;
 import fr.utbm.tx52.fatools.simulator.SimulationMode;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 	
-	private static final int CODE_EDITOR_REQUEST_CODE = 9123;
-    
-    private static final String DEFAULT_ACTION_NAME = "doAction";
-	
-	private static String readFully(Reader stream) throws IOException {
-		StringBuilder content = new StringBuilder();
-		char[] buffer = new char[2048];
-		int n;
-
-		n = stream.read(buffer);
-		while (n>0) {
-			content.append(buffer, 0, n);
-			n = stream.read(buffer);
-		}
-
-		return content.toString();
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,7 +65,6 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			case R.id.menu_fa_create_start:
 			{
 				FAStartStateCreationMode mode = new FAStartStateCreationMode();
-				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
@@ -109,7 +72,6 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			case R.id.menu_fa_create_state:
 			{
 				FAStateCreationMode mode = new FAStateCreationMode();
-				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;
@@ -117,7 +79,6 @@ public class FAEditorActivity extends AbstractEditorActivity<FiniteAutomata> {
 			case R.id.menu_fa_create_edge:
 			{
 				FAEdgeCreationMode mode = new FAEdgeCreationMode();
-				FigureView<?> view = getFigureView();
 				FigureActionModeManager modeManager = viewer.getActionModeManager();
 				modeManager.startMode(mode);
 				return true;

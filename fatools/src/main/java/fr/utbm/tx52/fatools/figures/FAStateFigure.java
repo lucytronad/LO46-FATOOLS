@@ -4,16 +4,10 @@ import java.util.UUID;
 
 import org.arakhne.afc.math.continous.object2d.Ellipse2f;
 import org.arakhne.afc.math.continous.object2d.Rectangle2f;
-import org.arakhne.afc.math.generic.Point2D;
-import org.arakhne.afc.ui.vector.Dimension;
-import org.arakhne.afc.ui.vector.Font;
 import org.arakhne.afc.ui.vector.VectorToolkit;
 import org.arakhne.neteditor.fig.figure.node.CircleNodeFigure;
 import org.arakhne.neteditor.fig.graphics.ViewGraphics2D;
-import org.arakhne.neteditor.formalism.ModelObjectEvent;
 
-import android.graphics.Paint;
-import android.graphics.Rect;
 import fr.utbm.tx52.fatools.constructs.FAAnchor;
 import fr.utbm.tx52.fatools.constructs.FAState;
 
@@ -39,13 +33,13 @@ public class FAStateFigure extends CircleNodeFigure<FAState, FAAnchor> {
 	protected void paintNode(ViewGraphics2D g) {
 		
 		if(getModelObject().isSuccessfull())
-			g.setOutlineColor(VectorToolkit.color(0, 255, 0));
+			g.setFillColor(VectorToolkit.color(0, 255, 0));
 		else if(getModelObject().hasFailed())
-			g.setOutlineColor(VectorToolkit.color(255, 0, 0));
+			g.setFillColor(VectorToolkit.color(255, 0, 0));
 		else if(getModelObject().isActive())
-			g.setOutlineColor(VectorToolkit.color(0, 0, 255));
+			g.setFillColor(VectorToolkit.color(0, 0, 255));
 		else
-			g.setOutlineColor(VectorToolkit.color(0, 0, 0));
+			g.setFillColor(VectorToolkit.color(255, 255, 255));
 		
 		super.paintNode(g);
 

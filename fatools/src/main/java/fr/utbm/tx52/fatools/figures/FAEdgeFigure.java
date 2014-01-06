@@ -93,6 +93,6 @@ public class FAEdgeFigure extends PolylineEdgeFigure<FAEdge> {
 				}
 			}
 		}
-	}
+	}	
 
 }

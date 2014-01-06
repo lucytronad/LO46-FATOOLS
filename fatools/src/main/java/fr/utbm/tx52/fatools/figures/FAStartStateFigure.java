@@ -32,13 +32,12 @@ public class FAStartStateFigure extends CircleNodeFigure<FAStartState, FAAnchor>
 	@Override
 	protected void paintNode(ViewGraphics2D g) {
 		
-		boolean isActive = getModelObject().isActive();
-		if(isActive) {
-			g.setFillColor(VectorToolkit.color(0, 255, 0));
-		}
-		else {
+		if(getModelObject().hasFailed())
+			g.setFillColor(VectorToolkit.color(255, 0, 0));
+		else if(getModelObject().isActive())
+			g.setFillColor(VectorToolkit.color(0, 0, 255));
+		else
 			g.setFillColor(VectorToolkit.color(0, 0, 0));
-		}
 		
 		Rectangle2f figureBounds = g.getCurrentViewComponentBounds();
 		Ellipse2f oval = new Ellipse2f(
